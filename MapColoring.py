@@ -291,7 +291,10 @@ def coloriage6(*args):
         tG = reduce(tG[0])
         Front.append(frontiere(tG[1], tG[2]))
         if not auto:
+            tg = tG[1] - Front
+            remplir(tg, None, (255, 0, 0))
             clignote(Front[-1], (255, 255, 255), (0, 0, 255), 100, 10)
+            remplir(tg, None, (0, 0, 0))
         remplir(Front[-1], None, (255, 255, 255))
         Hist.append(tG)
         cv2.imshow('Carte', image)
