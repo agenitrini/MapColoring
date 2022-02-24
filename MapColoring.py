@@ -714,6 +714,7 @@ def main():
         image = cv2.imread(file)
     HEIGHT, WIDTH = image.shape[:2]
 
+# Orange, Bleu, Jaune, Violet, Vert, Rouge
     Couleurs = [(250, 162, 76), (98, 178, 234), (242, 212, 0),
                 (157, 57, 205), (114, 236, 93), (247, 62, 111)] 
 
