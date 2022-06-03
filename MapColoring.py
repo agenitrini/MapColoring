@@ -2,7 +2,6 @@
 import cv2
 from tkinter import *
 from tkinter.filedialog import askopenfilename
-#import random
 import time
 import sys
 import os
@@ -67,16 +66,7 @@ def allareas():
             (b, g, r) = image[pt[1], pt[0]]
         for n in N:
             E.add(n)
-##        x, y = pt
-##        image[y-2:y+2, x-2:x+2] = (0,0,255)
-##        cv2.imshow('Carte', image)
-##        cv2.waitKey(0)
-        S, FS = area(pt)
-        
-##        remplir(S, None, (255,0,0))
-##        remplir(FS, None, (0,0,255))
-##        cv2.imshow('Carte', image)
-##        cv2.waitKey(0)       
+        S, FS = area(pt)     
         
         E = E - (S | FS)
         if len(S) > 0:
@@ -89,12 +79,6 @@ def allareas():
     print('fini', len(Zones), [len(z) for z in Zones], [len(z) for z in FZones])
     Graphe = voisins()
 
-##    for i in range(len(Graphe)):
-##        color(Zones[i], i, (211, 211, 211))
-##    for i in [random.randint(0, len(Graphe)-1)]:
-##        remplir(Zones[i], i, (0, 0, 255))
-##        for j in range(len(Graphe[i])):
-##            color(Zones[Graphe[i][j]], None, (255, 0, 0))
     return None
 
 
@@ -139,7 +123,6 @@ def color(S, i, col):
     global image
     
     x, y = gravite(S)
-    #image[y-5:y+6, x-5:x+6] = col
 
     if i != None:
         font                   = cv2.FONT_HERSHEY_PLAIN
@@ -274,7 +257,7 @@ def clignote(Frontiere, coul1, coul2, tps, repet):
     parite = True
     for i in range(2*repet):
         remplir(Frontiere, None, (coul2 if parite else coul1))
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         cv2.waitKey(tps)
         parite = not parite      
     return None
@@ -298,7 +281,7 @@ def coloriage6(*args):
                 remplir(Zones[z], None, (255, 255, 255))
         remplir(Front[-1], None, (255, 255, 255))
         Hist.append(tG)
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         cv2.waitKey(5)
 
     c = 0
@@ -309,7 +292,7 @@ def coloriage6(*args):
             C[z] = c
             remplir(Zones[z], None, inv(Couleurs[c]))
         c += 1
-    cv2.imshow('Carte', image)
+    cv2.imshow('Map', image)
     cv2.waitKey(0)
 
     H0, v0, g = Hist[-1]    
@@ -331,7 +314,7 @@ def coloriage6(*args):
         remplir(Front[i], None, (0, 0, 0))
         g = g1
         i -= 1
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         cv2.waitKey(5)
     
     return None
@@ -350,7 +333,7 @@ def coloriage5(*args):
         Front.append(frontiere(tG[1], tG[2]))
         remplir(Front[-1], None, (255, 255, 255))
         Hist.append(tG)
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         cv2.waitKey(5)
 
     c = 0
@@ -361,7 +344,7 @@ def coloriage5(*args):
             C[z] = c
             remplir(Zones[z], None, inv(Couleurs[c]))
         c += 1
-    cv2.imshow('Carte', image)
+    cv2.imshow('Map', image)
     cv2.waitKey(0)
 
     H0, v0, g = Hist[-1]    
@@ -430,7 +413,7 @@ def coloriage5(*args):
                     remplir(Zones[z], None, inv(Couleurs[c1]))
 
             if not auto:
-                cv2.imshow('Carte', image)
+                cv2.imshow('Map', image)
                 cv2.waitKey(10)            
 
             coul = [False]*6
@@ -448,7 +431,7 @@ def coloriage5(*args):
             remplir(Front[i], None, (0, 0, 0))
         g = g1
         i -= 1
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         cv2.waitKey(5)
     return None
 
@@ -474,7 +457,7 @@ def neighbourhood():
         color(Zones[i], len(Graphe[i]), (0, 0, 0))
         #color(Zones[i], i, (0, 0, 0))
        
-    cv2.imshow('Carte', image)
+    cv2.imshow('Map', image)
     cv2.waitKey(0)
     return None
 
@@ -528,7 +511,7 @@ def select2regions(G, pt1, pt2, C):
                 remplir(Zones[z], None, (211, 211, 211))
             else:
                 remplir(Zones[z], None, inv(Couleurs[C[z]]))
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         cv2.waitKey(20)
 
     i = 0
@@ -536,10 +519,10 @@ def select2regions(G, pt1, pt2, C):
         i += 1
         
     if i in Lzones:
-        print('Problème : on ne peut pas échanger les 2 couleurs.')
+        print('Problem : the two colors cannot be switched.')
         return True, Lzones, coul1, coul2
     else:
-        print('On peut echanger les 2 couleurs.')
+        print('The two colors are switched.')
         return False, Lzones, coul1, coul2
         
     
@@ -585,10 +568,10 @@ def select2regions_auto(G, pt1, pt2, C):
         i += 1
         
     if i in Lzones:
-        print('Problème : on ne peut pas échanger les 2 couleurs.')
+        print('Problem : the two colors cannot be switched.')
         return True, Lzones, coul1, coul2
     else:
-        print('On peut echanger les 2 couleurs.')
+        print('The two colors are switched.')
         return False, Lzones, coul1, coul2
         
 
@@ -609,10 +592,10 @@ def recup2zones():
     global image, clics
     
     clics = []
-    cv2.setMouseCallback('Carte', onMouse)
+    cv2.setMouseCallback('Map', onMouse)
 
     while len(clics) < 2 or (len(clics) == 2 and str(image[clics[0][1], clics[0][0]]) == str(image[clics[1][1], clics[1][0]])):
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         cv2.waitKey(5)
 
     return None
@@ -630,7 +613,7 @@ def next_rapide(L0, LS0, Coul0, Max):
     if len(L0) == 0:
         for r in range(len(Zones)):
             remplir(Zones[r], None, inv(Couleurs[Coul[r]]))
-        cv2.imshow('Carte', image)
+        cv2.imshow('Map', image)
         return True
     r = L0[0]
     V = Graphe[r]
@@ -648,7 +631,7 @@ def next_rapide(L0, LS0, Coul0, Max):
             Coul[r] = c
             if not auto:
                 remplir(Zones[r], None, inv(Couleurs[c]))
-                cv2.imshow('Carte', image)
+                cv2.imshow('Map', image)
                 cv2.waitKey(1)            
             valide = next_rapide(L, LS, Coul, Max)
             if not valide:
@@ -675,7 +658,7 @@ def effacer(*args):
     
     for z in Zones:
         remplir(z, None, (255, 255, 255))
-    cv2.imshow('Carte', image)
+    cv2.imshow('Map', image)
     return None
     
 
@@ -761,18 +744,18 @@ def main():
             
 
             
-    cv2.imshow('Carte', image)
+    cv2.imshow('Map', image)
 
 
-    cv2.createButton("Effacer", effacer, [])
-    cv2.createButton("Automatique", automatique, [], 1, 0)
-    cv2.createButton("Algorithme d'Euler", coloriage6, [], cv2.QT_NEW_BUTTONBAR)
-    cv2.createButton("Algorithme de Kempe", coloriage5, [], cv2.QT_NEW_BUTTONBAR)
-    cv2.createButton("Algorithme avec backtracking", coloriage_backtrack, [4], cv2.QT_NEW_BUTTONBAR)
+    cv2.createButton("Erase", effacer, [])
+    cv2.createButton("Automatic", automatique, [], 1, 0)
+    cv2.createButton("Euler Algorithm", coloriage6, [], cv2.QT_NEW_BUTTONBAR)
+    cv2.createButton("Kempe Algorithm", coloriage5, [], cv2.QT_NEW_BUTTONBAR)
+    cv2.createButton("Backtracking Algorithm", coloriage_backtrack, [4], cv2.QT_NEW_BUTTONBAR)
 
     
     
-    cv2.imshow('Carte', image)
+    cv2.imshow('Map', image)
     cv2.waitKey(0)
         
     cv2.imwrite(chemin_resultat + filename[:-4] + '_save' + str(int(time.time())) + filename[-4:], image) 
